@@ -9,7 +9,7 @@
       $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
        $_SESSION['user'] = $myusername;
 
-      $sql = "SELECT id FROM alumno WHERE id = '$myusername' and pswd = '$mypassword'";
+      $sql = "SELECT idalumno FROM alumno WHERE idalumno = '$myusername' and contrasena = '$mypassword'";
       
       $result = mysqli_query($db,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -17,7 +17,7 @@
       
       $alumno = mysqli_num_rows($result);
        
-      $sql = "SELECT id FROM profesor WHERE id = '$myusername' and pswd = '$mypassword'";
+      $sql = "SELECT idprofesor FROM profesor WHERE idprofesor = '$myusername' and contrasena = '$mypassword'";
       
       $result2 = mysqli_query($db,$sql);
       $row2 = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -31,7 +31,7 @@
         // session_register("myusername");
          	echo "2   ";
          $_SESSION['login_user'] = $myusername;
-         $_SESSION['pid']=$row['id'];
+         $_SESSION['pid']=$row['idalumno'];
 
          
          	echo "\n3";
@@ -40,7 +40,7 @@
           // session_register("myusername");
          	echo "2   ";
          $_SESSION['login_user'] = $myusername;
-         $_SESSION['pid']=$row2['id'];
+         $_SESSION['pid']=$row2['idprofesor'];
 
          
          	echo "\n3";

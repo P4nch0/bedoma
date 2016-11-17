@@ -50,7 +50,11 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="dashboardalumno.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="dashboardprofesor.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="materia.php"><i class="fa fa-gears fa-fw"></i> Admin Materia</a>
+                            <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>
@@ -76,17 +80,7 @@
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">
-                                        <?php
-                                                $dir = '../trabajos';
-                                                $sql = 'SELECT COUNT(*) FROM trabajo WHERE evaluado = 1;';
-                                                $result = mysqli_query($db,$sql);
-                                                while ($row = mysqli_fetch_array($result)) {
-                                                    print_r($row[0]);
-                                                }
-
-                                            ?>
-                                    </div>
+                                    <div class="huge">0</div>
                                     <div>Trabajos por Evaluar</div>
                                 </div>
                             </div>
@@ -126,17 +120,7 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">
-                                        <?php
-                                                $dir = '../trabajos';
-                                                $sql = 'SELECT COUNT(*) FROM trabajo WHERE CALIFICACION = "F" OR CALIFICACION = "R";';
-                                                $result = mysqli_query($db,$sql);
-                                                while ($row = mysqli_fetch_array($result)) {
-                                                    print_r($row[0]);
-                                                }
-
-                                            ?>
-                                    </div>
+                                    <div class="huge">0</div>
                                     <div>Trabajos en Vigilancia</div>
                                 </div>
                             </div>

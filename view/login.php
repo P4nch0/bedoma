@@ -20,9 +20,18 @@
                                     <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Iniciar Sesiòn">
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Iniciar Sesión">
                             </fieldset>
                         </form>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-2">
+                        <a href="view/alumno.php">Nuevo Alumno</a>
+                            </div>
+                            <div class="col-md-2 col-md-offset-2">
+                        <a href="view/profesor.php">Nuevo Profesor</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
