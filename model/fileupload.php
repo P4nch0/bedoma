@@ -19,8 +19,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
    
         $id=$row['idmateria'];
 
-    $sql = 'INSERT INTO `califiacion`(`idcalificacion`, `idalumno`, `idmateria`, `idtrabajo`, `califiacion`, `archivo`, `fecha`)
-            VALUES ( "", "'.$plastico.'",  "'.$id.'", "'.$metal.'", "P" , "'.$arch.'", "'.$nac.'" )';
+    $sql = 'INSERT INTO `califiacion`(`idcalificacion`, `idalumno`, `idmateria`, `idtrabajo`, `califiacion`, `archivo`, `fecha`, `retro`)
+            VALUES ( "", "'.$plastico.'",  "'.$id.'", "'.$metal.'", "P" , "'.$arch.'", "'.$nac.'", "")';
     print_r($_FILES);
     print_r($_POST);
     

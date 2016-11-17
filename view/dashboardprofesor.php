@@ -157,7 +157,7 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-files-o fa-fw"></i> Trabajos Entregados
+                            <i class="fa fa-files-o fa-fw"></i> Trabajos para Evaluar
 
                         </div>
                         <!-- /.panel-heading -->
@@ -191,7 +191,7 @@
                                                     </td>
                                                     <td>$row[1]</td>
                                                     <td>$row[4]</td>
-                                                    <td><button type='button' class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' data-whatever='$row[5]'>Evaluar</button></td>
+                                                    <td><button type='button' class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' data-whatever='$row[5]' data-alumno='$row[1]'>Evaluar</button></td>
                                                 </tr>");
                                                 }
                                                 ?>
@@ -207,6 +207,7 @@
                                                         <form action="../model/filegrade.php" method="POST">
                                                           <div class="form-group">
                                                             <input name="idt" type="hidden" class="form-control" id="recipient-name">
+                                                              <input name="ida" type="hidden" class="form-control" id="alum">
                                                           </div>
                                                           <div class="form-group">
                                                             <label for="recipient-name" class="control-label">Calificacion:</label>
@@ -381,13 +382,14 @@
                         <div class='panel-body'>
                             <div class='list-group'>");
                         
-                            $sql2 = 'select c.califiacion, count(*) 
+                            $sql2 = 'select c.califiacion, count(c.califiacion) 
                                     from califiacion as c 
                                     inner join materia as m on c.idmateria = m.idmateria 
-                                    where m.idprofesor = "' . $_SESSION['user'] . '" AND m.nombre = "'.$row[0].'";';
+                                    where m.idprofesor = "' . $_SESSION['user'] . '" AND m.nombre = "'.$row[0].'"
+                                    group by c.califiacion;';
                             $result2 = mysqli_query($db,$sql2);
                             while ($row2 = mysqli_fetch_array($result2)) {
-                                #print_r($row);
+                                #print_r($row2);
                                 if ($row2[1] !== "0") print_r("<a href='#' class='list-group-item'>
                                     <i class='fa fa-comment fa-fw'></i> $row2[0]
                                     <span class='pull-right text-muted small'>$row2[1]</em>
@@ -432,11 +434,13 @@
         $('#exampleModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
           var recipient = button.data('whatever') // Extract info from data-* attributes
+          var alu = button.data('alumno')
           // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
           // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
           var modal = $(this)
           modal.find('.modal-title').text('Evaluacion trabajo: ' + recipient)
-          modal.find('.modal-body input').val(recipient)
+          modal.find('#recipient-name').val(recipient)
+          modal.find('#alum').val(alu)
         })
     </script>
 

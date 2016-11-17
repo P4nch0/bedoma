@@ -1,5 +1,6 @@
 <?php
 include('dbconnect.php');
+session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -7,6 +8,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = htmlspecialchars($_POST["idt"]);
     $metal = htmlspecialchars($_POST["calif"]);
     $nac = htmlspecialchars($_POST["com"]);
+    $al = htmlspecialchars($_POST["ida"]);
     
     if($metal === "E") {
         $nac = $nac . ". Excelente trabajo, sigue asi.";
@@ -68,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $sql = 'UPDATE `califiacion`
             SET `califiacion` =  "'.$metal.'", `retro` = "'.$nac.'"
-            WHERE idtrabajo = '.$id.';';
+            WHERE idtrabajo = '.$id.' AND idalumno = "'.$al.'";';
     $try = mysqli_query($db,$sql);
     #echo $sql;
     #echo mysqli_error($db);

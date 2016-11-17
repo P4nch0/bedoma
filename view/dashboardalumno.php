@@ -52,12 +52,6 @@
                         <li>
                             <a href="dashboardalumno.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-
-
-                        <li>
-                            <a href="entrega.php"><i class="fa fa-file-o fa-fw"></i> Subir Nuevo Trabajo</a>
-                            <!-- /.nav-second-level -->
-                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -173,7 +167,9 @@
                                                 $dir = '../trabajos';
                                                 $sql = 'select t.idtrabajo, t.nombre, t.descripcion, m.nombre from trabajo as t 
                                                 inner join materia as m on t.idmateria = m.idmateria 
-                                                inner join atiende as a on a.idalumno = "' . $_SESSION['user'] . '" and a.idmateria = t.idmateria;';
+                                                inner join atiende as a on a.idalumno = "' . $_SESSION['user'] . '" and a.idmateria = t.idmateria
+                                                left join califiacion as c on t.idtrabajo = c.idtrabajo
+                                                where c.idtrabajo IS NULL;';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     print_r("<tr>
@@ -233,6 +229,91 @@
                     </div>
                     <!-- /.panel -->
 
+                    
+                                       <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-files-o fa-fw"></i> Trabajos por Entregar
+
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trabajo</th>
+                                                    <th>Evaluacion</th>
+                                                    <th>Retroalimentacion</th>
+                                                    <th>Materia</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sql = 'select t.nombre,  c.califiacion, c.retro, m.nombre 
+                                                from califiacion as c inner join materia as m on m.idmateria = c.idmateria
+                                                inner join trabajo as t on t.idtrabajo = c.idtrabajo
+                                                where c.idalumno = "' . $_SESSION['user'] . '";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    print_r("<tr>
+                                                    <td>$row[0]</td>
+                                                    <td>$row[1]</td>
+                                                    <td>$row[2]</td>
+                                                    <td>$row[3]</td>
+                                                    ");
+                                                }
+                                                ?>
+                                                
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                  <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="exampleModalLabel">Evaluacion</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <form role="form" enctype="multipart/form-data" action="../model/fileupload.php" method="POST">
+                                                            <input name="idt" type="hidden" class="form-control" id="idt">
+                                                                    <input type="hidden" name="idalumno" readonly value="<?php echo $_SESSION['user']; ?>">
+                                                                    <input type="hidden" name="nmria" id="nmria">
+                                                                   <div class="form-group">
+                                                                    <label for="metal" class="control-label">Fecha </label>
+                                                                    <input type="date" class="form-control" name="nac" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                                                   </div>
+                                                                
+                                                            <div class="modal-footer">
+                                                                <div class="form-group"> 
+                                                                    <input name="userfile" type="file" id="exampleInputFile">
+                                                                </div>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                <input type="submit" class="btn btn-primary" value="Subir archivo" />
+                                                      </div>
+                                                        </form>
+                                                      </div>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    
+                    
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-4 -->
