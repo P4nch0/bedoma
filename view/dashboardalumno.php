@@ -143,7 +143,7 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-files-o fa-fw"></i> Trabajos Entregados
+                            <i class="fa fa-files-o fa-fw"></i> Trabajos por Entregar
 
                         </div>
                         <!-- /.panel-heading -->
@@ -193,11 +193,11 @@
                                                                     <label for="metal" class="control-label">Fecha </label>
                                                                     <input type="date" class="form-control" name="nac" value="<?php echo date('Y-m-d'); ?>" readonly>
                                                                    </div>
+                                                                
+                                                            <div class="modal-footer">
                                                                 <div class="form-group"> 
                                                                     <input name="userfile" type="file" id="exampleInputFile">
                                                                 </div>
-                                                            <div class="modal-footer">
-                                                                
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                                 <input type="submit" class="btn btn-primary" value="Subir archivo" />
                                                       </div>
@@ -228,6 +228,34 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Materias
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <?php
+                                                $sql = 'select m.nombre
+                                                        from materia as m inner join atiende as a on m.idmateria = a.idmateria
+                                                        where a.idalumno = "' . $_SESSION['user'] . '";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    #print_r($row);
+                                                    print_r("<a href='#' class='list-group-item'>
+                                    <i class='fa fa-comment fa-fw'></i> $row[0]
+                                    </span>
+                                </a>");
+                                                }
+                                                ?>
+                                
+                            </div>
+                            <!-- /.list-group -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                                </div>
             </div>
             <!-- /.row -->
         </div>

@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $try = mysqli_query($db,$sql);
         if($try === true) echo "<script>alert('Archivo subido exitosamente'); location.href='../view/dashboardalumno.php';</script>";
     } else {
-        # echo "<script>alert('Error al subir archivo, intenta de nuevo'); location.href='../view/entrega.php';</script>";
+        # echo "<script>alert('Error al subir archivo, intenta de nuevo'); location.href='../view/dashboardalumno.php';</script>";
     }
     
 }

@@ -84,7 +84,16 @@
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php
+                                                $sql = 'select count(*)
+                                                        from califiacion as c inner join materia as m on m.idmateria = c.idmateria
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '" AND c.califiacion = "P";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    print_r($row[0]);
+                                                }
+
+                                            ?></div>
                                     <div>Trabajos por Evaluar</div>
                                 </div>
                             </div>
@@ -101,7 +110,9 @@
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">
                                     <?php
-                                                $sql = 'SELECT COUNT(*) FROM trabajo;';
+                                                $sql = 'select count(*)
+                                                        from califiacion as c inner join materia as m on m.idmateria = c.idmateria
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     print_r($row[0]);
@@ -148,9 +159,9 @@
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Matricula</th>
+                                                    <th>Materia</th>
                                                     <th>Archivo</th>
-                                                    <th>Fecha de Entrega</th>
+                                                    <th>Alumno</th>
                                                     <th>Evaluacion</th>
                                                     <th>Acciones</th>
                                                 </tr>
@@ -158,18 +169,20 @@
                                             <tbody>
                                                 <?php
                                                 $dir = '../trabajos';
-                                                $sql = 'SELECT * FROM trabajo;';
+                                                $sql = 'select m.nombre, c.idalumno, c.archivo, c.fecha, c.califiacion, c.idtrabajo
+                                                        from califiacion as c inner join materia as m on m.idmateria = c.idmateria
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
-                                                    # print_r($row);
+                                                    #print_r($row);
                                                     print_r("<tr>
-                                                    <td>$row[1]</td>
+                                                    <td>$row[0]</td>
                                                     <td>
-                                                    <a href='$dir/$row[3]'>$row[3]</a>
+                                                    <a href='$dir/$row[2]'>$row[2]</a>
                                                     </td>
-                                                    <td>$row[5]</td>
-                                                    <td>$row[8]</td>
-                                                    <td><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-whatever='$row[0]'>Evaluar</button></td>
+                                                    <td>$row[1]</td>
+                                                    <td>$row[4]</td>
+                                                    <td><button type='button' class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' data-whatever='$row[5]'>Evaluar</button></td>
                                                 </tr>");
                                                 }
                                                 ?>
@@ -215,14 +228,13 @@
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>
+
                                 <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
                                 <!-- /.col-lg-8 (nested) -->
                             </div>
                             <!-- /.row -->
                         </div>
+                        
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -231,8 +243,38 @@
                 </div>
                 
                 <!-- /.col-lg-4 -->
+                
+                                                        <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Materias
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <?php
+                                                $sql = 'select m.nombre
+                                                        from materia as m
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    #print_r($row);
+                                                    print_r("<a href='#' class='list-group-item'>
+                                    <i class='fa fa-comment fa-fw'></i> $row[0]
+                                    </span>
+                                </a>");
+                                                }
+                                                ?>
+                                
+                            </div>
+                            <!-- /.list-group -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                                </div>
             </div>
             <!-- /.row -->
+            
         </div>
         <!-- /#page-wrapper -->
 
