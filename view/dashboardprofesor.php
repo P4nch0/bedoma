@@ -134,7 +134,16 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php
+                                                $sql = 'select count(*)
+                                                        from califiacion as c inner join materia as m on m.idmateria = c.idmateria
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '" AND c.califiacion = "R" OR c.califiacion = "F";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    print_r($row[0]);
+                                                }
+
+                                            ?></div>
                                     <div>Trabajos en Vigilancia</div>
                                 </div>
                             </div>
@@ -238,13 +247,98 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                                        <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-files-o fa-fw"></i> Trabajos Asignados
 
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Materia</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sql = 'select m.nombre, t.nombre, t.descripcion
+                                                        from trabajo as t inner join materia as m on m.idmateria = t.idmateria
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    #print_r($row);
+                                                    print_r("<tr>
+                                                    <td>$row[1]</td>
+                                                    <td>$row[2]</td>
+                                                    <td>$row[0]</td>
+                                                    ");
+                                                }
+                                                ?>
+                                                
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                  <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="exampleModalLabel">Evaluacion</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <form action="../model/filegrade.php" method="POST">
+                                                          <div class="form-group">
+                                                            <input name="idt" type="hidden" class="form-control" id="recipient-name">
+                                                          </div>
+                                                          <div class="form-group">
+                                                            <label for="recipient-name" class="control-label">Calificacion:</label>
+                                                            <select id="emrf" name="calif" class="form-control">
+                                                                <option value="F">F</option>
+                                                                <option value="R">R</option>
+                                                                <option value="M">M</option>
+                                                                <option value="E">E</option>
+                                                            </select>
+                                                          </div>
+                                                          <div class="form-group">
+                                                            <label for="message-text" class="control-label">Comentarios adicionales:</label>
+                                                            <textarea name="com" class="form-control" id="message-text"></textarea>
+                                                          </div>
+                                                            <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Evaluar</button>
+                                                      </div>
+                                                        </form>
+                                                      </div>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+
+                                <!-- /.col-lg-4 (nested) -->
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        
+                        <!-- /.panel-body -->
+                    </div>
                     <!-- /.panel -->
+                    
+                    
                 </div>
                 
                 <!-- /.col-lg-4 -->
                 
-                                                        <div class="col-lg-4">
+                <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Materias
@@ -271,7 +365,44 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                                </div>
+                             
+                    <?php
+                    $sql = 'select m.nombre
+                            from materia as m
+                            where m.idprofesor = "' . $_SESSION['user'] . '";';
+                    $result = mysqli_query($db,$sql);
+                    while ($row = mysqli_fetch_array($result)) {
+                        #print_r($row);
+                        print_r("<div class='panel panel-default'>
+                        <div class='panel-heading'>
+                            <i class='fa fa-bell fa-fw'></i> $row[0] - Resumen de calificaciones
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class='panel-body'>
+                            <div class='list-group'>");
+                        
+                            $sql2 = 'select c.califiacion, count(*) 
+                                    from califiacion as c 
+                                    inner join materia as m on c.idmateria = m.idmateria 
+                                    where m.idprofesor = "' . $_SESSION['user'] . '" AND m.nombre = "'.$row[0].'";';
+                            $result2 = mysqli_query($db,$sql2);
+                            while ($row2 = mysqli_fetch_array($result2)) {
+                                #print_r($row);
+                                if ($row2[1] !== "0") print_r("<a href='#' class='list-group-item'>
+                                    <i class='fa fa-comment fa-fw'></i> $row2[0]
+                                    <span class='pull-right text-muted small'>$row2[1]</em>
+                                    </span>
+                                </a>");}
+                                
+                            print_r("</div>
+                            <!-- /.list-group -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>" );
+                    }
+                    ?>
+                                                            
+                </div>
             </div>
             <!-- /.row -->
             
@@ -293,6 +424,7 @@
     <!-- Morris Charts JavaScript -->
     <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
+    
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

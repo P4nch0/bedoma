@@ -129,7 +129,15 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge"><?php
+                                                $sql = 'SELECT COUNT(*) from califiacion as c
+                                                where c.idalumno = "' . $_SESSION['user'] . '" AND c.califiacion = "R" OR c.califiacion = "F";';
+                                                $result = mysqli_query($db,$sql);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    print_r($row[0]);
+                                                }
+
+                                            ?></div>
                                     <div>Trabajos para Mejorar</div>
                                 </div>
                             </div>
@@ -185,7 +193,7 @@
                                                         <h4 class="modal-title" id="exampleModalLabel">Evaluacion</h4>
                                                       </div>
                                                       <div class="modal-body">
-                                                        <form action="../model/fileupload.php" method="POST">
+                                                        <form role="form" enctype="multipart/form-data" action="../model/fileupload.php" method="POST">
                                                             <input name="idt" type="hidden" class="form-control" id="idt">
                                                                     <input type="hidden" name="idalumno" readonly value="<?php echo $_SESSION['user']; ?>">
                                                                     <input type="hidden" name="nmria" id="nmria">

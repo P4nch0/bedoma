@@ -8,8 +8,66 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $metal = htmlspecialchars($_POST["calif"]);
     $nac = htmlspecialchars($_POST["com"]);
     
+    if($metal === "E") {
+        $nac = $nac . ". Excelente trabajo, sigue asi.";
+    } elseif ($metal === "M") {
+        
+        $nac = $nac . ". El trabajo cumple lo esperado. Para alcanzar la excelencia debes cumplir lo siguiente:";
+        
+        $sql2 = 'SELECT descripcion FROM `e` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - E:" . $row[0];
+        }
+        
+    } elseif ($metal === "R") {
+        
+        $nac = $nac . ". Trabajo regular. Para mejorar debes cumplir los siguientes niveles:";
+        
+        $sql2 = 'SELECT descripcion FROM `e` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - E:" . $row[0];
+        }
+        
+        $sql2 = 'SELECT descripcion FROM `m` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - M:" . $row[0];
+        }
+        
+    } elseif ($metal === "F") {
+        $nac = $nac . ". Trabajo muy deficiente. Para mejorar debes cumplir los siguientes niveles:";
+        
+        $sql2 = 'SELECT descripcion FROM `e` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - E:" . $row[0];
+        }
+        
+        $sql2 = 'SELECT descripcion FROM `m` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - M:" . $row[0];
+        }
+        
+        $sql2 = 'SELECT descripcion FROM `r` WHERE idtrabajo ="'.$id.'";';
+        $result = mysqli_query($db,$sql2);
+
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[0] !== "") $nac = $nac . " - R:" . $row[0];
+        }
+        
+    }
+    
+    
     $sql = 'UPDATE `califiacion`
-            SET `califiacion` =  "'.$metal.'"
+            SET `califiacion` =  "'.$metal.'", `retro` = "'.$nac.'"
             WHERE idtrabajo = '.$id.';';
     $try = mysqli_query($db,$sql);
     #echo $sql;

@@ -77,7 +77,9 @@
                                 <form role="form" enctype="multipart/form-data" action="../model/fileupload.php" method="POST">
                                     <div class="form-group">
                                         <label for="plastico">ID Alumno</label>
-                                        <input type="text" class="form-control" name="plastico" readonly value="<?php echo $_SESSION['user']; ?>">
+                                        <input type="text" class="form-control" name="idalumno" readonly value="<?php echo $_SESSION['user']; ?>">
+                                        <input type="text" class="form-control" name="nmria" readonly value="1">
+                                        <input type="text" class="form-control" name="idt" readonly value="16">
                                     </div>
                                     <div class="form-group">
                                         <label for="metal">Materia</label>

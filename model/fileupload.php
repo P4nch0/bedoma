@@ -20,14 +20,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $id=$row['idmateria'];
 
     $sql = 'INSERT INTO `califiacion`(`idcalificacion`, `idalumno`, `idmateria`, `idtrabajo`, `califiacion`, `archivo`, `fecha`)
-            VALUES ( "", "'.$plastico.'",  "'.$id.'", "'.$metal.'", "" , "'.$arch.'", "'.$nac.'" )';
-    
+            VALUES ( "", "'.$plastico.'",  "'.$id.'", "'.$metal.'", "P" , "'.$arch.'", "'.$nac.'" )';
+    print_r($_FILES);
+    print_r($_POST);
     
     if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
         $try = mysqli_query($db,$sql);
         if($try === true) echo "<script>alert('Archivo subido exitosamente'); location.href='../view/dashboardalumno.php';</script>";
     } else {
         # echo "<script>alert('Error al subir archivo, intenta de nuevo'); location.href='../view/dashboardalumno.php';</script>";
+        
     }
     
 }
