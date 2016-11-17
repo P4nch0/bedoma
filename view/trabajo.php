@@ -76,45 +76,23 @@
     <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <h1 class="page-header">Nueva Materia</h1>
+                    <div class="col-lg-8">
+                        <h1 class="page-header">Nuevo Trabajo</h1>
                                                                     
-                                <form role="form" enctype="multipart/form-data" action="../model/nuevamateria.php" method="POST">
+                                <form role="form" enctype="multipart/form-data" action="../model/nuevotrabajo.php" method="POST">
                                     <div class="form-group">
                                         <input type="hidden" class="form-control" name="idp" readonly value="<?php echo $_SESSION['user']; ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="metal">Nombre</label>
+                                        <label for="nombre">Nombre</label>
                                         <input type="text" class="form-control" name="nombre">
-                                       </div>
-                                    <input type="submit" class="btn btn-primary" value="Dar de alta" />
-                                </form>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h1 class="page-header">Agregar alumno a materia</h1>
-                                                                    
-                                <form role="form" enctype="multipart/form-data" action="../model/grupo.php" method="POST">
-                                    <div class="form-group">
-                                        <input type="hidden" class="form-control" name="idp" readonly value="<?php echo $_SESSION['user']; ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="metal">Alumno</label>
-                                        <select name="ida" class="form-control">
-                                          <?php
-                                                $sql = "SELECT idalumno FROM alumno";
-                                                $result = mysqli_query($db,$sql);
-                                                while ($row = mysqli_fetch_array($result)) {
-                                                    print_r("<option value='" . $row[0] . "'>" . $row[0] . "</option>");
-                                                }
-                                                  
-                                            ?>
-                                        </select>
+                                        <label for="desc">Descripcion</label>
+                                        <textarea class="form-control" name="desc" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="metal">Materia</label>
+                                        <label for="idm">Materia</label>
                                         <select name="idm" class="form-control">
                                           <?php
                                                 $sql = 'SELECT * FROM materia where idprofesor ="' . $_SESSION['user'] . '";';
@@ -126,8 +104,38 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <input type="submit" class="btn btn-primary" value="Agregar" />
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="nombre">Requisitos para E</label>
+                                            <input type="text" class="form-control" name="e1"><br/>
+                                            <input type="text" class="form-control" name="e2"><br/>
+                                            <input type="text" class="form-control" name="e3" value="Cumplir con todo M" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">Requisitos para M</label>
+                                            <input type="text" class="form-control" name="m1"><br/>
+                                            <input type="text" class="form-control" name="m2"><br/>
+                                            <input type="text" class="form-control" name="m3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="nombre">Requisitos para R</label>
+                                            <input type="text" class="form-control" name="r1"><br/>
+                                            <input type="text" class="form-control" name="r2"><br/>
+                                            <input type="text" class="form-control" name="r3">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">Requisitos para F</label>
+                                            <input type="text" class="form-control" name="f1"><br/>
+                                            <input type="text" class="form-control" name="f2"><br/>
+                                            <input type="text" class="form-control" name="f3">
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Asignar" />
                                 </form>
+                        <br/>
+                        <br/>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

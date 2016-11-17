@@ -56,6 +56,10 @@
                             <a href="materia.php"><i class="fa fa-gears fa-fw"></i> Admin Materia</a>
                             <!-- /.nav-second-level -->
                         </li>
+                        <li>
+                            <a href="trabajo.php"><i class="fa fa-file-o fa-fw"></i> Nuevo Trabajo</a>
+                            <!-- /.nav-second-level -->
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -97,7 +101,6 @@
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">
                                     <?php
-                                                $dir = '../trabajos';
                                                 $sql = 'SELECT COUNT(*) FROM trabajo;';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
