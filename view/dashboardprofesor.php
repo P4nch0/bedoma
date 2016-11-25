@@ -396,7 +396,7 @@
                                 #print_r($row2);
                                 if ($row2[1] !== "0") print_r("<a href='#' class='list-group-item'>
                                     <i class='fa fa-comment fa-fw'></i> $row2[0]
-                                    <span id='$row2[0]' class='pull-right text-muted small' value='$row2[1]'>$row2[1]</em>
+                                    <span id='$row[0]"."$row2[0]' class='pull-right text-muted small'>$row2[1]</em>
                                     </span>
                                 </a>");}
                                 
@@ -409,10 +409,10 @@
                         print_r("<canvas id='$row[0]' width='50' height='50'></canvas>
                         <script>
                         var ctx = document.getElementById('$row[0]');
-                        if (document.getElementById('E')) var E = document.getElementById('E').innerHTML;
-                        if (document.getElementById('M')) var M = document.getElementById('M').innerHTML;
-                        if (document.getElementById('R')) var R = document.getElementById('R').innerHTML;
-                        if (document.getElementById('F')) var F = document.getElementById('F').innerHTML;
+                        if (document.getElementById('$row[0]"."E')) var E = document.getElementById('$row[0]"."E').innerHTML;
+                        if (document.getElementById('$row[0]"."M')) var M = document.getElementById('$row[0]"."M').innerHTML;
+                        if (document.getElementById('$row[0]"."R')) var R = document.getElementById('$row[0]"."R').innerHTML;
+                        if (document.getElementById('$row[0]"."F')) var F = document.getElementById('$row[0]"."F').innerHTML;
                         var myChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
