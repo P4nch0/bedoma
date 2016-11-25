@@ -125,7 +125,7 @@
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php
                                                 $sql = 'SELECT COUNT(*) from califiacion as c
-                                                where c.idalumno = "' . $_SESSION['user'] . '" AND c.califiacion = "R" OR c.califiacion = "F";';
+                                                where c.idalumno = "' . $_SESSION['user'] . '" AND c.califiacion = "F";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     print_r($row[0]);

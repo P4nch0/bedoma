@@ -141,7 +141,7 @@
                                     <div class="huge"><?php
                                                 $sql = 'select count(*)
                                                         from califiacion as c inner join materia as m on m.idmateria = c.idmateria
-                                                        where m.idprofesor = "' . $_SESSION['user'] . '" AND c.califiacion = "R" OR c.califiacion = "F";';
+                                                        where m.idprofesor = "' . $_SESSION['user'] . '" AND c.califiacion = "F";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     print_r($row[0]);
