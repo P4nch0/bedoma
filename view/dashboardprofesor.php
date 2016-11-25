@@ -25,6 +25,10 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -392,7 +396,7 @@
                                 #print_r($row2);
                                 if ($row2[1] !== "0") print_r("<a href='#' class='list-group-item'>
                                     <i class='fa fa-comment fa-fw'></i> $row2[0]
-                                    <span class='pull-right text-muted small'>$row2[1]</em>
+                                    <span id='$row2[0]' class='pull-right text-muted small' value='$row2[1]'>$row2[1]</em>
                                     </span>
                                 </a>");}
                                 
@@ -401,6 +405,48 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>" );
+                        
+                        print_r("<canvas id='$row[0]' width='50' height='50'></canvas>
+                        <script>
+                        var ctx = document.getElementById('$row[0]');
+                        if (document.getElementById('E')) var E = document.getElementById('E').innerHTML;
+                        if (document.getElementById('M')) var M = document.getElementById('M').innerHTML;
+                        if (document.getElementById('R')) var R = document.getElementById('R').innerHTML;
+                        if (document.getElementById('F')) var F = document.getElementById('F').innerHTML;
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['E', 'M', 'R', 'F'],
+                                datasets: [{
+                                    label: '$row[0]',
+                                    data: [E, M, R, F],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        </script>");
+                        
                     }
                     ?>
                                                             
