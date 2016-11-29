@@ -86,7 +86,12 @@
                                     <div class="form-group">
                                         <label for="metal">Nombre</label>
                                         <input type="text" class="form-control" name="nombre">
-                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="metal">Grupo</label>
+                                        <input type="number" class="form-control" name="grupo">
+                                    </div>
+                                                                        
                                     <input type="submit" class="btn btn-primary" value="Dar de alta" />
                                 </form>
                     </div>

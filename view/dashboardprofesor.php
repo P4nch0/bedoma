@@ -169,7 +169,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
+                                        <table id='trabajosE' class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Materia</th>
@@ -182,13 +182,13 @@
                                             <tbody>
                                                 <?php
                                                 $dir = '../trabajos';
-                                                $sql = 'select m.nombre, c.idalumno, c.archivo, c.fecha, c.califiacion, c.idtrabajo
+                                                $sql = 'select m.nombre, c.idalumno, c.archivo, c.fecha, c.califiacion, c.idtrabajo, m.idmateria
                                                         from califiacion as c inner join materia as m on m.idmateria = c.idmateria
                                                         where m.idprofesor = "' . $_SESSION['user'] . '";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     #print_r($row);
-                                                    print_r("<tr>
+                                                    print_r("<tr class='$row[6]'>
                                                     <td>$row[0]</td>
                                                     <td>
                                                     <a href='$dir/$row[2]'>$row[2]</a>
@@ -262,7 +262,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
+                                        <table id='TrabajosA' class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Nombre</th>
@@ -272,13 +272,13 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = 'select m.nombre, t.nombre, t.descripcion
+                                                $sql = 'select m.nombre, t.nombre, t.descripcion, m.idmateria
                                                         from trabajo as t inner join materia as m on m.idmateria = t.idmateria
                                                         where m.idprofesor = "' . $_SESSION['user'] . '";';
                                                 $result = mysqli_query($db,$sql);
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     #print_r($row);
-                                                    print_r("<tr>
+                                                    print_r("<tr class='$row[3]'>
                                                     <td>$row[1]</td>
                                                     <td>$row[2]</td>
                                                     <td>$row[0]</td>
@@ -351,19 +351,35 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
+                                <span id='todos' href='' class='list-group-item' onclick='filtroMateria("todos")' style='cursor: pointer;'>
+                                                    <i class='fa fa-comment fa-fw'></i> Todas
+                                                </span>
                                 <?php
-                                                $sql = 'select m.nombre
-                                                        from materia as m
-                                                        where m.idprofesor = "' . $_SESSION['user'] . '";';
-                                                $result = mysqli_query($db,$sql);
-                                                while ($row = mysqli_fetch_array($result)) {
-                                                    #print_r($row);
-                                                    print_r("<a href='#' class='list-group-item'>
-                                    <i class='fa fa-comment fa-fw'></i> $row[0]
-                                    </span>
-                                </a>");
-                                                }
-                                                ?>
+                                    $sql = 'select m.nombre, m.idmateria
+                                            from materia as m
+                                            where m.idprofesor = "' . $_SESSION['user'] . '";';
+                                    $result = mysqli_query($db,$sql);
+                                    $ids = [];
+                                    $count = 0;
+                                    while ($row = mysqli_fetch_array($result)) {
+                                        $ids[$count] = $row[1];
+                                        $count++;
+                                        #print_r($row);
+                                        print_r("<span id='$row[1]' href='' class='list-group-item' onclick='filtroMateria($row[1])' style='cursor: pointer;'>
+                                                    <i class='fa fa-comment fa-fw'></i> $row[0]
+                                                </span>");
+                                    }
+                                    print_r("<script>
+                                                function filtroMateria (id) {");
+                                    foreach ($ids as $id) {
+                                        print_r("if (id === 'todos') $('.$id').show();
+                                                else if ($id !== id) $('.$id').hide();
+                                                else $('.$id').show();");
+                                    }
+                                                    
+                                    print_r("}
+                                            </script>")
+                                ?>
                                 
                             </div>
                             <!-- /.list-group -->
@@ -372,13 +388,13 @@
                     </div>
                              
                     <?php
-                    $sql = 'select m.nombre
+                    $sql = 'select m.nombre, m.idmateria
                             from materia as m
                             where m.idprofesor = "' . $_SESSION['user'] . '";';
                     $result = mysqli_query($db,$sql);
                     while ($row = mysqli_fetch_array($result)) {
                         #print_r($row);
-                        print_r("<div class='panel panel-default'>
+                        print_r("<div class='panel panel-default $row[1]'>
                         <div class='panel-heading'>
                             <i class='fa fa-bell fa-fw'></i> $row[0] - Resumen de calificaciones
                         </div>
@@ -406,13 +422,17 @@
                         <!-- /.panel-body -->
                     </div>" );
                         
-                        print_r("<canvas id='$row[0]' width='50' height='50'></canvas>
+                        print_r("<canvas id='$row[0]' width='50' height='50' class='$row[1]'></canvas>
                         <script>
+                        var E = 0;
+                        var M = 0;
+                        var R = 0;
+                        var F = 0;
                         var ctx = document.getElementById('$row[0]');
-                        if (document.getElementById('$row[0]"."E')) var E = document.getElementById('$row[0]"."E').innerHTML;
-                        if (document.getElementById('$row[0]"."M')) var M = document.getElementById('$row[0]"."M').innerHTML;
-                        if (document.getElementById('$row[0]"."R')) var R = document.getElementById('$row[0]"."R').innerHTML;
-                        if (document.getElementById('$row[0]"."F')) var F = document.getElementById('$row[0]"."F').innerHTML;
+                        if (document.getElementById('$row[0]"."E')) E = document.getElementById('$row[0]"."E').innerHTML;
+                        if (document.getElementById('$row[0]"."M')) M = document.getElementById('$row[0]"."M').innerHTML;
+                        if (document.getElementById('$row[0]"."R')) R = document.getElementById('$row[0]"."R').innerHTML;
+                        if (document.getElementById('$row[0]"."F')) F = document.getElementById('$row[0]"."F').innerHTML;
                         var myChart = new Chart(ctx, {
                             type: 'bar',
                             data: {

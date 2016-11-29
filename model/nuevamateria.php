@@ -6,10 +6,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     //define variables with POST values
     $nombre = htmlspecialchars($_POST["nombre"]);
     $ap = htmlspecialchars($_POST["idp"]);
+    $grupo = htmlspecialchars($_POST["grupo"]);
     
 
     $sql = 'INSERT INTO `materia`(`idmateria`, `nombre`, `idprofesor`) 
-            VALUES ( "",  "'.$nombre.'", "'.$ap.'")';
+            VALUES ( "",  "'.$nombre.' Grupo ('.$grupo.')" , "'.$ap.'")';
     
     $try = mysqli_query($db,$sql);
     
