@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $try = mysqli_query($db,$sql);
     
-    if($try === true) echo "<script>alert('Profesor creado exitosamente'); location.href='../view/dashboardprofesor.php';</script>";
+    if($try === true) echo "<script>alert('Materia creada exitosamente'); location.href='../view/dashboardprofesor.php';</script>";
     else echo "<script>alert('Error al registrar, intenta de nuevo'); location.href='../view/materia.php';</script>";
     
 }

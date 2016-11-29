@@ -80,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
     
-    if($try === true) echo "<script>alert('Alumno agregado exitosamente'); location.href='../view/dashboardprofesor.php';</script>";
+    if($try === true) echo "<script>alert('Trabajo creado exitosamente'); location.href='../view/dashboardprofesor.php';</script>";
     else echo "<script>alert('Error al agregar, intenta de nuevo'); location.href='../view/trabajo.php';</script>";
     
 }
